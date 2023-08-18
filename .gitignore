@@ -1,4 +1,4 @@
-
+node_modules/
 node_modules/.package-lock.json
 *.js
 node_modules/lodash/LICENSE
