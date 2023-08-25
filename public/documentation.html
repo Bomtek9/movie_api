@@ -1,11 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documentation</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    h3 {
+      font-weight: 600;
+    }
+  </style>
 </head>
 <body>
-    
+  <h1><b>Movie_API App</b></h1>
+  <p>Goal: To build the server-side component of a “movies” web application. The web application will provide users with access to information about different movies, directors, and genres. Users will be able to sign up, update their personal information, and create a list of their favorite movies.</p>
+
+  <h2>URL endpoints</h2>
+
+  <h3>GET /movies</h3>
+  <p>Return a list of ALL movies to the user.</p>
+
+  <h3>GET /movies/:title</h3>
+  <p>Return data (description, genre, director, image URL, whether it is featured or not) about a single movie by title to the user.</p>
+
+  <h3>GET /movies/genres/:genreName</h3>
+  <p>Return data about a genre (description) by name/title (e.g., “Thriller”).</p>
+
+  <h3>GET /movies/:directors</h3>
+  <p>Return data about a director (bio, birth year, death year) by name.</p>
+
+  <h3>POST /users</h3>
+  <p>Allow new users to register.</p>
+  <p>Example request body, in JSON:</p>
+  <pre>{ "name": "new user" ,"favoriteMovies": [] }</pre>
+  <p>Format of the response data: JSON</p>
+
+  <h3>PUT /users/:id</h3>
+  <p>Allow users to update their user info (username).</p>
+  <p>Example request body, in JSON:</p>
+  <pre>{ "name": "updated name"}</pre>
+  <p>Format of the response data: JSON</p>
+
+  <h3>POST /users/:id/:movieTitle</h3>
+  <p>Allow users to add a movie to their list of favorites showing only a text that a movie has been added.</p>
+
+  <h3>DELETE users/:id/:movieTitle</h3>
+  <p>Allow users to remove a movie from their list of favorites.</p>
+
+  <h3>DELETE users/:id</h3>
+  <p>Allow existing users to unregister.</p>
 </body>
 </html>

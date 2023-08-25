@@ -181,6 +181,125 @@ app.get("/movies", (request, response) => {
   response.status(200).json(movies);
 });
 
+// Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user;
+
+app.get("/movies/:title", (request, response) => {
+  const { title } = request.params;
+  const movie = movies.find((movie) => {
+    return movie.title === title;
+  });
+
+  if (movie) {
+    response.status(200).json(movie);
+  } else {
+    response.status(400).send("no such movie was found");
+  }
+});
+
+//Return data about a genre (description) by name/title (e.g., “Thriller”);
+app.get("/movies/genres/:genreName", (request, response) => {
+  const { genreName } = request.params;
+  const MovieInGenre = movies.find((movie) => {
+    return movie.genre.name === genreName;
+  });
+
+  if (MovieInGenre) {
+    const genre = MovieInGenre.genre;
+
+    response.status(200).json(genre);
+    console.log(genre);
+  } else {
+    response.status(400).send("no such genre found");
+  }
+});
+
+// Return data about a director (bio, birth year, death year) by name;
+app.get("/movies/directors/:directorName", (request, response) => {
+  const { directorName } = request.params;
+
+  const directorMovie = movies.find((movie) => {
+    return movie.director.name === directorName;
+  });
+
+  if (directorMovie) {
+    const director = directorMovie.director;
+    response.status(200).json(director);
+  } else {
+    response.status(401).send("no such director found!");
+  }
+});
+
+//USERS
+// Allow new users to register;
+app.post("/users", (request, response) => {
+  const newUser = request.body;
+  if (newUser.name) {
+    newUser.id = uuid.v4();
+    users.push(newUser);
+    response.status(201).json(newUser);
+  } else {
+    response.status(400).send("missing name");
+  }
+});
+
+//update user
+app.put("/users/:id", (request, response) => {
+  const { id } = request.params;
+  const updateUser = request.body;
+  let user = users.find((user) => user.id.toString() === id);
+
+  if (user) {
+    user.name = updateUser.name;
+    response.status(200).json(user);
+  } else {
+    response.status(400).send("no such user");
+  }
+});
+
+//add favorite movie to users list
+app.post("/users/:id/:movieTitle", (request, response) => {
+  const { id, movieTitle } = request.params;
+  let user = users.find((user) => user.id.toString() === id);
+
+  if (user) {
+    user.favoriteMovies.push(movieTitle);
+    response
+      .status(200)
+      .send(`${movieTitle} has been added to user ${id}s list`);
+  } else {
+    response.status(400).send("no such movie");
+  }
+});
+
+//deletes favorite movie to users list
+app.delete("/users/:id/:movieTitle", (request, response) => {
+  const { id, movieTitle } = request.params;
+  let user = users.find((user) => user.id.toString() === id);
+
+  if (user) {
+    user.favoriteMovies.filter((title) => title !== movieTitle);
+    response
+      .status(200)
+      .send(`${movieTitle} has been removed from user ${id}s list`);
+  } else {
+    response.status(400).send("no such movie");
+  }
+});
+
+//deletes user
+app.delete("/users/:id/", (request, response) => {
+  const { id } = request.params;
+  let user = users.find((user) => user.id.toString() === id);
+
+  if (user) {
+    users = users.filter((user) => user.id.toString() !== id);
+    response.status(200).send(`user ${id} has been deleted`);
+    // response.json(users);
+  } else {
+    response.status(400).send("no such movie");
+  }
+});
+
 //error handling middleware function
 //should be last, but before app.listen()
 app.use((err, req, res, next) => {
