@@ -35,7 +35,7 @@ let movies = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     genre: { name: "thriller", description: "genre description here" },
     director: {
-      name: "director 1",
+      name: "director2",
       bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       born: 1940,
       death: "",
@@ -49,7 +49,7 @@ let movies = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     genre: { name: "thriller", description: "genre description here" },
     director: {
-      name: "director 1",
+      name: "director3",
       bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       born: 1940,
       death: "",
@@ -63,7 +63,7 @@ let movies = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     genre: { name: "thriller", description: "genre description here" },
     director: {
-      name: "director 1",
+      name: "director4",
       bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       born: 1940,
       death: "",
@@ -77,7 +77,7 @@ let movies = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     genre: { name: "thriller", description: "genre description here" },
     director: {
-      name: "director 1",
+      name: "director5",
       bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       born: 1940,
       death: "",
@@ -91,7 +91,7 @@ let movies = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     genre: { name: "thriller", description: "genre description here" },
     director: {
-      name: "director 1",
+      name: "director6",
       bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       born: 1940,
       death: "",
@@ -105,7 +105,7 @@ let movies = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     genre: { name: "thriller", description: "genre description here" },
     director: {
-      name: "director 1",
+      name: "director7",
       bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       born: 1940,
       death: "",
@@ -119,7 +119,7 @@ let movies = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     genre: { name: "thriller", description: "genre description here" },
     director: {
-      name: "director 1",
+      name: "director8",
       bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       born: 1940,
       death: "",
@@ -133,7 +133,7 @@ let movies = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     genre: { name: "thriller", description: "genre description here" },
     director: {
-      name: "director 1",
+      name: "director9",
       bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       born: 1940,
       death: "",
@@ -147,7 +147,7 @@ let movies = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     genre: { name: "thriller", description: "genre description here" },
     director: {
-      name: "director 1",
+      name: "director10",
       bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       born: 1940,
       death: "",
@@ -214,7 +214,7 @@ app.get("/movies/genres/:genreName", (request, response) => {
 });
 
 // Return data about a director (bio, birth year, death year) by name;
-app.get("/movies/directors/:directorName", (request, response) => {
+app.get("/movies/director/:directorName", (request, response) => {
   const { directorName } = request.params;
 
   const directorMovie = movies.find((movie) => {
