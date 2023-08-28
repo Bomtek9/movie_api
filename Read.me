@@ -1,3 +1,5 @@
+Schema:
+
 | Entity   | Attributes                                                            |   |   |   |
 |----------|-----------------------------------------------------------------------|---|---|---|
 | Movies   | ID, Title, Description, Genre, Director, URL to image, Featured (Y/N) |   |   |   |
@@ -5,4 +7,47 @@
 | Genre    | ID, Name, Description                                                 |   |   |   |
 | Users    | ID, Username, Password, Email, Birthday, Favorite movies              |   |   |   |
 
+Movie Table:
 
+| movieID | title | description | genreID | directorID | imagePath | featured |
+|---------|-------|-------------|---------|------------|-----------|----------|
+|         |       |             |         |            |           |          |
+|         |       |             |         |            |           |          |
+|         |       |             |         |            |           |          |
+|         |       |             |         |            |           |          |
+
+Genre Table:
+
+| genreID | name | description |
+|---------|------|-------------|
+|         |      |             |
+|         |      |             |
+|         |      |             |
+|         |      |             |
+
+Director Table:
+
+| directorID | name | bio | birthyear | deathyear |
+|------------|------|-----|-----------|-----------|
+|            |      |     |           |           |
+|            |      |     |           |           |
+|            |      |     |           |           |
+|            |      |     |           |           |
+
+User Table:
+
+| userid | username | password | email | birthdate |
+|--------|----------|----------|-------|-----------|
+|        |          |          |       |           |
+|        |          |          |       |           |
+|        |          |          |       |           |
+|        |          |          |       |           |
+
+Users-Movie Table:
+
+| usermovieid | userid | movieid |
+|-------------|--------|---------|
+|             |        |         |
+|             |        |         |
+|             |        |         |
+|             |        |         |
