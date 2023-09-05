@@ -82,3 +82,5 @@
 ::1 - - [25/Aug/2023:20:42:26 +0000] "DELETE /users/2 HTTP/1.1" 400 13 "-" "PostmanRuntime/7.32.3"
 ::1 - - [25/Aug/2023:20:43:45 +0000] "PUT /users/1 HTTP/1.1" 200 64 "-" "PostmanRuntime/7.32.3"
 ::1 - - [25/Aug/2023:20:46:26 +0000] "DELETE /users/1/Wedding%20Crashers HTTP/1.1" 200 51 "-" "PostmanRuntime/7.32.3"
+::1 - - [05/Sep/2023:20:37:51 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
+::1 - - [05/Sep/2023:20:37:52 +0000] "GET /favicon.ico HTTP/1.1" 404 150 "http://localhost:8080/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
