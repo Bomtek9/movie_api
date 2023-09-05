@@ -1,161 +1,30 @@
-const express = require("express");
+const express = require("express"),
+  bodyParser = require('body-parser'),
+  uuid = require('uuid');
+
 const morgan = require("morgan");
+const mongoose = require('mongoose');
+const Models = require('./models.js');
+
+const Movies = Models.Movie;
+const Users = Models.User;
+const Genres = Models.Genre;
+const Directors = Models.Directors;
+
+mongoose.connect('mongodb://127.0.0.1:27017/cfDB', { 
+  useNewUrlParser: true, useUnifiedTopology: true});
+
+
 const fs = require("fs");
 const path = require("path");
-const { request } = require("http");
-const bodyParser = require("body-parser");
-const uuid = require("uuid");
+const {request} = require("http");
+
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-let users = [
-  { id: 1, name: "kim", favoriteMovies: [] },
-  { id: 2, name: "joe", favoriteMovies: [] },
-];
-
-let movies = [
-  {
-    title: "film 1",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    genre: { name: "drama", description: "genre description here" },
-    director: {
-      name: "director1",
-      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      born: 1940,
-      death: "",
-    },
-    img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Foriginalvintagemovieposters.com%2Fwp-content%2Fuploads%2F2018%2F06%2FStar-Wars-5672-768x1162.jpg&f=1&nofb=1&ipt=d191eb7a7592ede00a4efb69d08105b59832ac04e24f4d6e8eab7df59bc5537b&ipo=images",
-    feature: true,
-  },
-  {
-    title: "film 2",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    genre: { name: "thriller", description: "genre description here" },
-    director: {
-      name: "director2",
-      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      born: 1940,
-      death: "",
-    },
-    img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Foriginalvintagemovieposters.com%2Fwp-content%2Fuploads%2F2018%2F06%2FStar-Wars-5672-768x1162.jpg&f=1&nofb=1&ipt=d191eb7a7592ede00a4efb69d08105b59832ac04e24f4d6e8eab7df59bc5537b&ipo=images",
-    feature: true,
-  },
-  {
-    title: "film 3",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    genre: { name: "thriller", description: "genre description here" },
-    director: {
-      name: "director3",
-      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      born: 1940,
-      death: "",
-    },
-    img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Foriginalvintagemovieposters.com%2Fwp-content%2Fuploads%2F2018%2F06%2FStar-Wars-5672-768x1162.jpg&f=1&nofb=1&ipt=d191eb7a7592ede00a4efb69d08105b59832ac04e24f4d6e8eab7df59bc5537b&ipo=images",
-    feature: true,
-  },
-  {
-    title: "film 4",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    genre: { name: "thriller", description: "genre description here" },
-    director: {
-      name: "director4",
-      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      born: 1940,
-      death: "",
-    },
-    img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Foriginalvintagemovieposters.com%2Fwp-content%2Fuploads%2F2018%2F06%2FStar-Wars-5672-768x1162.jpg&f=1&nofb=1&ipt=d191eb7a7592ede00a4efb69d08105b59832ac04e24f4d6e8eab7df59bc5537b&ipo=images",
-    feature: true,
-  },
-  {
-    title: "film 5",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    genre: { name: "thriller", description: "genre description here" },
-    director: {
-      name: "director5",
-      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      born: 1940,
-      death: "",
-    },
-    img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Foriginalvintagemovieposters.com%2Fwp-content%2Fuploads%2F2018%2F06%2FStar-Wars-5672-768x1162.jpg&f=1&nofb=1&ipt=d191eb7a7592ede00a4efb69d08105b59832ac04e24f4d6e8eab7df59bc5537b&ipo=images",
-    feature: true,
-  },
-  {
-    title: "film 6",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    genre: { name: "thriller", description: "genre description here" },
-    director: {
-      name: "director6",
-      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      born: 1940,
-      death: "",
-    },
-    img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Foriginalvintagemovieposters.com%2Fwp-content%2Fuploads%2F2018%2F06%2FStar-Wars-5672-768x1162.jpg&f=1&nofb=1&ipt=d191eb7a7592ede00a4efb69d08105b59832ac04e24f4d6e8eab7df59bc5537b&ipo=images",
-    feature: true,
-  },
-  {
-    title: "film 7",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    genre: { name: "thriller", description: "genre description here" },
-    director: {
-      name: "director7",
-      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      born: 1940,
-      death: "",
-    },
-    img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Foriginalvintagemovieposters.com%2Fwp-content%2Fuploads%2F2018%2F06%2FStar-Wars-5672-768x1162.jpg&f=1&nofb=1&ipt=d191eb7a7592ede00a4efb69d08105b59832ac04e24f4d6e8eab7df59bc5537b&ipo=images",
-    feature: true,
-  },
-  {
-    title: "film 8",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    genre: { name: "thriller", description: "genre description here" },
-    director: {
-      name: "director8",
-      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      born: 1940,
-      death: "",
-    },
-    img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Foriginalvintagemovieposters.com%2Fwp-content%2Fuploads%2F2018%2F06%2FStar-Wars-5672-768x1162.jpg&f=1&nofb=1&ipt=d191eb7a7592ede00a4efb69d08105b59832ac04e24f4d6e8eab7df59bc5537b&ipo=images",
-    feature: true,
-  },
-  {
-    title: "film 9",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    genre: { name: "thriller", description: "genre description here" },
-    director: {
-      name: "director9",
-      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      born: 1940,
-      death: "",
-    },
-    img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Foriginalvintagemovieposters.com%2Fwp-content%2Fuploads%2F2018%2F06%2FStar-Wars-5672-768x1162.jpg&f=1&nofb=1&ipt=d191eb7a7592ede00a4efb69d08105b59832ac04e24f4d6e8eab7df59bc5537b&ipo=images",
-    feature: true,
-  },
-  {
-    title: "film 10",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    genre: { name: "thriller", description: "genre description here" },
-    director: {
-      name: "director10",
-      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      born: 1940,
-      death: "",
-    },
-    img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Foriginalvintagemovieposters.com%2Fwp-content%2Fuploads%2F2018%2F06%2FStar-Wars-5672-768x1162.jpg&f=1&nofb=1&ipt=d191eb7a7592ede00a4efb69d08105b59832ac04e24f4d6e8eab7df59bc5537b&ipo=images",
-    feature: true,
-  },
-];
 
 // create a write stream (in append mode)
 // a ‘log.txt’ file is created in root directory
@@ -184,17 +53,16 @@ app.get("/movies", (request, response) => {
 // Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user;
 
 app.get("/movies/:title", (request, response) => {
-  const { title } = request.params;
-  const movie = movies.find((movie) => {
-    return movie.title === title;
+  Movies.findOne({ Title: request.params.Title})
+  .then ((movie) => {
+    res.json(movie);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send("Error: " + err);
   });
-
-  if (movie) {
-    response.status(200).json(movie);
-  } else {
-    response.status(400).send("no such movie was found");
-  }
 });
+
 
 //Return data about a genre (description) by name/title (e.g., “Thriller”);
 app.get("/movies/genres/:genreName", (request, response) => {
@@ -230,17 +98,41 @@ app.get("/movies/director/:directorName", (request, response) => {
 });
 
 //USERS
-// Allow new users to register;
-app.post("/users", (request, response) => {
-  const newUser = request.body;
-  if (newUser.name) {
-    newUser.id = uuid.v4();
-    users.push(newUser);
-    response.status(201).json(newUser);
-  } else {
-    response.status(400).send("missing name");
-  }
-});
+//Add a user
+/* We’ll expect JSON in this format
+{
+  ID: Integer,
+  Username: String,
+  Password: String,
+  Email: String,
+  Birthday: Date
+}*/
+
+app.post('/users', async(req, res) => {
+  await Users.findOne({Username: req.body.Username})
+  .then((user) => {
+    if (user) {
+      return res.status(400).send(req.body.Username + 'already exists');
+    } else {
+      Users
+        .create({
+          Username: req.body.Username,
+          Email: req.body.Email,
+          Password: req.body.Password,
+          Birthday: req.body.Birthday
+        })
+        then((user) => {res.status(201).json(user) })
+        .catch((error) => {
+          console.error(error);
+          res.status(500).send('Error: ' + error);
+        })
+    }
+  })
+  .catch((error) => {
+    console.error(error);
+    res.status(500).send('Error: ' + error);
+  });
+}),
 
 //update user
 app.put("/users/:id", (request, response) => {
