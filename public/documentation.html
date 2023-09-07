@@ -1,52 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <style>
-    h3 {
-      font-weight: 600;
-    }
-  </style>
-</head>
-<body>
-  <h1><b>Movie_API App</b></h1>
-  <p>Goal: To build the server-side component of a “movies” web application. The web application will provide users with access to information about different movies, directors, and genres. Users will be able to sign up, update their personal information, and create a list of their favorite movies.</p>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyFlix Documentation</title>
+  </head>
+  <body>
+    <h1>MyFlix App</h1>
 
-  <h2>URL endpoints</h2>
-
-  <h3>GET /movies</h3>
-  <p>Return a list of ALL movies to the user.</p>
-
-  <h3>GET /movies/:title</h3>
-  <p>Return data (description, genre, director, image URL, whether it is featured or not) about a single movie by title to the user.</p>
-
-  <h3>GET /movies/genres/:genreName</h3>
-  <p>Return data about a genre (description) by name/title (e.g., “Thriller”).</p>
-
-  <h3>GET /movies/:directors</h3>
-  <p>Return data about a director (bio, birth year, death year) by name.</p>
-
-  <h3>POST /users</h3>
-  <p>Allow new users to register.</p>
-  <p>Example request body, in JSON:</p>
-  <pre>{ "name": "new user" ,"favoriteMovies": [] }</pre>
-  <p>Format of the response data: JSON</p>
-
-  <h3>PUT /users/:id</h3>
-  <p>Allow users to update their user info (username).</p>
-  <p>Example request body, in JSON:</p>
-  <pre>{ "name": "updated name"}</pre>
-  <p>Format of the response data: JSON</p>
-
-  <h3>POST /users/:id/:movieTitle</h3>
-  <p>Allow users to add a movie to their list of favorites showing only a text that a movie has been added.</p>
-
-  <h3>DELETE users/:id/:movieTitle</h3>
-  <p>Allow users to remove a movie from their list of favorites.</p>
-
-  <h3>DELETE users/:id</h3>
-  <p>Allow existing users to unregister.</p>
-</body>
-</html>
+    <p>This app is a “movies” web application. The web
+      application will provide users with access to information about different
+      movies, directors, and genres. Users will be able to sign up, update their
+      personal information, and create a list of their favorite movies.</p>
+  
+        
+        <table>
+          <thead>
+            <tr>
+              <th>Endpoint</th>
+              <th>HTTP Method</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>/movies</td>
+              <td>GET</td>
+              <td>Returns all movies.</td>
+            </tr>
+            <tr>
+              <td>/users</td>
+              <td>GET</td>
+              <td>Returns all users.</td>
+            </tr>
+            <tr>
+              <td>/movies/:Title</td>
+              <td>GET</td>
+              <td>Returns a movie based on the provided title.</td>
+            </tr>
+            <tr>
+              <td>/movies/genres/:genreName</td>
+              <td>GET</td>
+              <td>Returns movies based on the provided genre name.</td>
+            </tr>
+            <tr>
+              <td>/movies/directors/:directorName</td>
+              <td>GET</td>
+              <td>Returns data from a director based on the provided name.</td>
+            </tr>
+            <tr>
+              <td>/users</td>
+              <td>POST</td>
+              <td>Allows new users to register.</td>
+            </tr>
+            <tr>
+              <td>/users/:Username</td>
+              <td>PUT</td>
+              <td>Allows users to update their information (username, password, email, birthday).</td>
+            </tr>
+            <tr>
+              <td>/users/:Username/movies/:MovieID</td>
+              <td>POST</td>
+              <td>Allows users to add movies to their favorites list.</td>
+            </tr>
+            <tr>
+              <td>/users/:Username/movies/:MovieID</td>
+              <td>DELETE</td>
+              <td>Allows users to remove a movie from their favorites list.</td>
+            </tr>
+            <tr>
+              <td>/users/:Username</td>
+              <td>DELETE</td>
+              <td>Allows users to delete their registration.</td>
+            </tr>
+            <tr>
+              <td>/</td>
+              <td>GET</td>
+              <td>Returns a simple text message.</td>
+            </tr>
+            <tr>
+              <td>Static Files</td>
+              <td>N/A</td>
+              <td>Serves static files from the "public" folder.</td>
+            </tr>
+            <tr>
+              <td>Error Handling</td>
+              <td>N/A</td>
+              <td>Logs all errors to the terminal.</td>
+            </tr>
+          </tbody>
+        </table>
+        
+      
+  </body>
+  </html>
