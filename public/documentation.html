@@ -1,96 +1,165 @@
 <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyFlix Documentation</title>
-  </head>
-  <body>
-    <h1>MyFlix App</h1>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>MyFlix App</title>
+</head>
+<body>
+	<section class="main-content">
+		<h1>MyFlix App</h1>
+		<p>This is a Api that allows users to sign up, update their personal information and make a list of their
+			favorite movies. This web application will provide users with an array of nostalgic movies, with the title,directors and
+			genre of the movies.
+		</p>
+	</section>
+	<h1>How To Use This API</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>Business Logic</th>
+				<th>URL</th>
+				<th>HTTP Method</th>
+				<th>Query Parameters</th>
+				<th>Request Body Data Format</th>
+				<th>Response Body Data Format</th>
+			</tr>
+		</thead>
 
-    <p>This app is a “movies” web application. The web
-      application will provide users with access to information about different
-      movies, directors, and genres. Users will be able to sign up, update their
-      personal information, and create a list of their favorite movies.</p>
-  
-        
-        <table>
-          <thead>
-            <tr>
-              <th>Endpoint</th>
-              <th>HTTP Method</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>/movies</td>
-              <td>GET</td>
-              <td>Returns all movies.</td>
-            </tr>
-            <tr>
-              <td>/users</td>
-              <td>GET</td>
-              <td>Returns all users.</td>
-            </tr>
-            <tr>
-              <td>/movies/:Title</td>
-              <td>GET</td>
-              <td>Returns a movie based on the provided title.</td>
-            </tr>
-            <tr>
-              <td>/movies/genres/:genreName</td>
-              <td>GET</td>
-              <td>Returns movies based on the provided genre name.</td>
-            </tr>
-            <tr>
-              <td>/movies/directors/:directorName</td>
-              <td>GET</td>
-              <td>Returns data from a director based on the provided name.</td>
-            </tr>
-            <tr>
-              <td>/users</td>
-              <td>POST</td>
-              <td>Allows new users to register.</td>
-            </tr>
-            <tr>
-              <td>/users/:Username</td>
-              <td>PUT</td>
-              <td>Allows users to update their information (username, password, email, birthday).</td>
-            </tr>
-            <tr>
-              <td>/users/:Username/movies/:MovieID</td>
-              <td>POST</td>
-              <td>Allows users to add movies to their favorites list.</td>
-            </tr>
-            <tr>
-              <td>/users/:Username/movies/:MovieID</td>
-              <td>DELETE</td>
-              <td>Allows users to remove a movie from their favorites list.</td>
-            </tr>
-            <tr>
-              <td>/users/:Username</td>
-              <td>DELETE</td>
-              <td>Allows users to delete their registration.</td>
-            </tr>
-            <tr>
-              <td>/</td>
-              <td>GET</td>
-              <td>Returns a simple text message.</td>
-            </tr>
-            <tr>
-              <td>Static Files</td>
-              <td>N/A</td>
-              <td>Serves static files from the "public" folder.</td>
-            </tr>
-            <tr>
-              <td>Error Handling</td>
-              <td>N/A</td>
-              <td>Logs all errors to the terminal.</td>
-            </tr>
-          </tbody>
-        </table>
-        
-      
-  </body>
-  </html>
+		<tbody>
+			<tr>
+				<td>Returns all current users</td>
+				<td>/users</td>
+				<td>GET</td>
+				<td>N/A</td>
+				<td>N/A</td>
+				<td>A JSON object of all the current users</td>
+			</tr>
+
+			<tr>
+				<td>Returns a specific user by name</td>
+				<td>/users/:Name</td>
+				<td>GET</td>
+				<td>:Name</td>
+				<td>N/A</td>
+				<td>A JSON object of all a specific user</td>
+			</tr>
+
+			<tr>
+				<td>Returns a list of all movies</td>
+				<td>/movies</td>
+				<td>GET</td>
+				<td>N/A</td>
+				<td>N/A</td>
+				<td>A JSON object of all the movies</td>
+			</tr>
+
+			<tr>
+				<td>Returns a specific movie by title</td>
+				<td>/movies/:title</td>
+				<td>GET</td>
+				<td>:title</td>
+				<td>N/A</td>
+				<td>A JSON object of one movie</td>
+			</tr>
+
+			<tr>
+				<td>Allows users to search for a movie by genre</td>
+				<td>/users/genres/:genreName</td>
+				<td>GET</td>
+				<td>:genreName</td>
+				<td>N/A</td>
+				<td>returns all movies with the genre searched</td>
+			</tr>
+
+			<tr>
+				<td>Returns movies by directors</td>
+				<td>/movies/directors/:directorName</td>
+				<td>GET</td>
+				<td>:directorName</td>
+				<td>N/A</td>
+				<td>A JSON object of all the movies with that searched director</td>
+			</tr>
+
+			<tr>
+				<td>Allows a user to create a new account</td>
+				<td>/users/</td>
+				<td>POST</td>
+				<td>N/A</td>
+				<td>You Must Enter a JSON object of a new user ie.{
+					"Name": "PizzaLover",
+          "Email": "PizzaHunger@gmail.com",
+					"Password": "HungryHowies9898",
+					"Birthday": "01-07-1993"
+					} *note Name,Password,Email,Birthday must be capitalized and all fields must be field out. </td>
+				<td>A JSON object of a new user added plus an ID number and empty array to store users favorite movies
+					ie. {
+					"Name": "PizzaLover",
+          "Email": "PizzaHunger@gmail.com",
+					"Password": "HungryHowies9898",
+					"Birthday": "1993-01-07T05:00:00.000Z",
+					"FavoriteMovies": [],
+					"_id": "........",
+					"__v": 0
+					}</td>
+			</tr>
+
+			<tr>
+				<td>Saves a users favorite movie</td>
+				<td>/users/:Name/:MovieID</td>
+				<td>POST</td>
+				<td>:Name/:MovieID</td>
+				<td>In the url /:MovieID use the ObjectID of the movie document in the movie collection of a specific
+					movie you like.</td>
+				<td>it will return a JSON Object with the ussers id, name,password email, birthday and the favorite
+					movie you added will be in the array of favorite movies </td>
+			</tr>
+
+			<tr>
+				<td>Allows a user to be deleted</td>
+				<td>/users/:Name</td>
+				<td>DELETE</td>
+				<td>:Name</td>
+				<td>N/A</td>
+				<td>Response text saying ie. This "User" has been deleted </td>
+			</tr>
+
+			<tr>
+				<td>Allows a user to update their user information</td>
+				<td>/user/:Name</td>
+				<td>PUT</td>
+				<td>:Name</td>
+				<td>A JSON object of the four user categories, each categorize ie. Name, Password etc. must be
+					capitlized and filled in even if its not updated. For example {
+					"Name": "JuniorPizzaBoy",
+					"Email": "PizzaHungerandSoda@gmail.com",
+          "Password": "HungryHowiesPizza9898",
+					"Birthday": "October 31, 2005"
+					}
+				</td>
+				<td>A JSON object of the updated information you changed and the information you didn't change. If you
+					updated all categories all information when come back updated ie. {
+					"_id": "646238c8a0d5073f558507c1",
+					"Name": "JuniorPizzaBoy",
+					"Email": "PizzaHungerandSoda@gmail.com",
+          "Password": "HungryHowiesPizza9898",
+					"Birthday": "2005-10-31T05:00:00.000Z",
+					"FavoriteMovies": [],
+					"__v": 0
+					} </td>
+			</tr>
+
+			<tr>
+				<td>Removes a users favorite movie</td>
+				<td>/users/:Name/movies/:MovieID</td>
+				<td>DELETE</td>
+				<td>:Name/:MovieID</td>
+				<td>In the url /:MovieID use the ObjectID of the movie document in the movie collection of a specific
+					returns a JSON object of all users information and updated FavoriteMovies missing the movie you
+					requested to be deleted.</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
