@@ -285,6 +285,11 @@ app.use((err, req, res, next) => {
     res.status(500).send("something broke");
   });
   
+let auth = require('./auth')(app);
+
+const passport = require('passport');
+require('./passport');
+  
   app.listen(8080, () => {
     console.log("Your app is listening on port 8080.");
   });
