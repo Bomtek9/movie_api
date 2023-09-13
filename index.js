@@ -25,6 +25,11 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+let auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
+  
+
 
 // create a write stream (in append mode)
 // a ‘log.txt’ file is created in root directory
@@ -44,16 +49,16 @@ app.get('/', (req, res) => {
 });
 
 // Get all movies
-app.get('/movies', (req, res) => {
-	Movies.find()
-		.then((movies) => {
-			res.status(200).json(movies);
-		})
-		.catch((err) => {
-			console.error(err);
-			res.status(500).send('Error: ' + err);
-		});
-});
+app.get('/movies', passport.authenticate('jwt', { session: false }), async (req, res) => {
+	await Movies.find()
+	  .then((movies) => {
+		res.status(201).json(movies);
+	  })
+	  .catch((error) => {
+		console.error(error);
+		res.status(500).send('Error: ' + error);
+	  });
+  });
 
 // Get movie by title
 app.get('/movies/title/:Title', (req, res) => {
@@ -285,11 +290,7 @@ app.use((err, req, res, next) => {
     res.status(500).send("something broke");
   });
   
-let auth = require('./auth')(app);
 
-const passport = require('passport');
-require('./passport');
-  
   app.listen(8080, () => {
     console.log("Your app is listening on port 8080.");
   });

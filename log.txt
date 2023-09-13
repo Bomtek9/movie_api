@@ -125,3 +125,4 @@
 ::1 - - [07/Sep/2023:17:50:28 +0000] "POST /users/Dudeman/movies/64f2316590ebac5592caf56a HTTP/1.1" 200 203 "-" "PostmanRuntime/7.32.3"
 ::1 - - [07/Sep/2023:17:53:21 +0000] "DELETE /users/Dudeman/movies/64f2316590ebac5592caf56a HTTP/1.1" 200 177 "-" "PostmanRuntime/7.32.3"
 ::1 - - [07/Sep/2023:17:55:58 +0000] "DELETE /users/Dudeman HTTP/1.1" 200 20 "-" "PostmanRuntime/7.32.3"
+::1 - - [12/Sep/2023:21:34:58 +0000] "GET /movies HTTP/1.1" 401 - "-" "PostmanRuntime/7.32.3"
