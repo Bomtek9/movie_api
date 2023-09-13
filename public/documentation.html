@@ -39,7 +39,7 @@
 
 			<tr>
 				<td>Returns a specific user by name</td>
-				<td>/users/:Name</td>
+				<td>/users/:Username</td>
 				<td>GET</td>
 				<td>:Name</td>
 				<td>N/A</td>
@@ -88,14 +88,14 @@
 				<td>POST</td>
 				<td>N/A</td>
 				<td>You Must Enter a JSON object of a new user ie.{
-					"Name": "PizzaLover",
+					"Username": "PizzaLover",
           "Email": "PizzaHunger@gmail.com",
 					"Password": "HungryHowies9898",
 					"Birthday": "01-07-1993"
 					} *note Name,Password,Email,Birthday must be capitalized and all fields must be field out. </td>
 				<td>A JSON object of a new user added plus an ID number and empty array to store users favorite movies
 					ie. {
-					"Name": "PizzaLover",
+					"User": "PizzaLover",
           "Email": "PizzaHunger@gmail.com",
 					"Password": "HungryHowies9898",
 					"Birthday": "1993-01-07T05:00:00.000Z",
@@ -107,7 +107,7 @@
 
 			<tr>
 				<td>Saves a users favorite movie</td>
-				<td>/users/:Name/:MovieID</td>
+				<td>/users/:Username/:MovieID</td>
 				<td>POST</td>
 				<td>:Name/:MovieID</td>
 				<td>In the url /:MovieID use the ObjectID of the movie document in the movie collection of a specific
@@ -118,18 +118,18 @@
 
 			<tr>
 				<td>Allows a user to be deleted</td>
-				<td>/users/:Name</td>
+				<td>/users/:Username</td>
 				<td>DELETE</td>
-				<td>:Name</td>
+				<td>:Username</td>
 				<td>N/A</td>
 				<td>Response text saying ie. This "User" has been deleted </td>
 			</tr>
 
 			<tr>
 				<td>Allows a user to update their user information</td>
-				<td>/user/:Name</td>
+				<td>/user/:Username</td>
 				<td>PUT</td>
-				<td>:Name</td>
+				<td>:Username</td>
 				<td>A JSON object of the four user categories, each categorize ie. Name, Password etc. must be
 					capitlized and filled in even if its not updated. For example {
 					"Name": "JuniorPizzaBoy",
@@ -152,7 +152,7 @@
 
 			<tr>
 				<td>Removes a users favorite movie</td>
-				<td>/users/:Name/movies/:MovieID</td>
+				<td>/users/:Username/movies/:MovieID</td>
 				<td>DELETE</td>
 				<td>:Name/:MovieID</td>
 				<td>In the url /:MovieID use the ObjectID of the movie document in the movie collection of a specific
