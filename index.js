@@ -26,7 +26,18 @@ app.use(express.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 const cors = reqiuire('cors');
-app.use(cors());
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
+      let message = 'The CORS policy for this application does not allow access from origin ' + origin;
+      return callback(new Error(message ), false);
+    }
+    return callback(null, true);
+  }
+}));
 
 let auth = require('./auth')(app);
 const passport = require('passport');
@@ -171,8 +182,9 @@ app.get('/users/:Username', (req, res) => {
 });
 
 // Create a new user
-app.post('/users', (req, res) => {
-	Users.findOne({ Username: req.body.Username })
+app.post('/users', async(req, res) => {
+	let hashedPassword = Users.hashedPassword(req.body.Password);
+	await Users.findOne({Username: req.body.Username})// Search to see if a user with the requested username already exists
 		.then((user) => {
 			if (user) {
 				return res.status(400).send(req.body.Username + ' already exists');
