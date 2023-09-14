@@ -5,6 +5,7 @@ const express = require("express"),
 const morgan = require("morgan");
 const mongoose = require('mongoose');
 const Models = require('./models.js');
+const { check, validationResult } = require('express-validator');
 
 const Movies = Models.Movie;
 const Users = Models.User;
@@ -58,14 +59,17 @@ app.use(morgan("combined", { stream: accessLogStream }));
 //shortcut so i dont have to res.send() all files in the public folder (right now just documentation.html)
 app.use(express.static("public"));
 
-app.get('/', (req, res) => {
-	res.send('This is the default route endpoint');
-});
 
-//MOVIES
-app.get("/", (request, response) => {
-    let responseText = "It's Movie Night !";
-    response.send(responseText);
+// Get All Movies
+app.get('/movies', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    await Movies.find()
+      .then((movies) => {
+        res.status(201).json(movies);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send('Error: ' + error);
+      });
   });
   
   //Return a list of ALL movies to the user;
@@ -132,63 +136,58 @@ app.get("/", (request, response) => {
     }
   );
 
-// Get all users
-app.get('/users', (req, res) => {
-	Users.find()
-		.then((users) => {
-			res.status(200).json(users);
-		})
-		.catch((err) => {
-			console.error(err);
-			res.status(500).send('Error: ' + err);
-		});
-});
 
-// Get a user by username
-app.get('/users/:Username', (req, res) => {
-	Users.findOne({ Username: req.params.Username })
-		.then((user) => {
-			if (!user) {
-				return res.status(404).send('Error: ' + req.params.Username + ' was not found');
-			} else {
-				res.json(user);
-			}
-		})
-		.catch((err) => {
-			console.error(err);
-			res.status(500).send('Error: ' + err);
-		});
-});
+  //Users:
 
-// Create a new user
-app.post('/users', async(req, res) => {
-	let hashedPassword = Users.hashedPassword(req.body.Password);
-	await Users.findOne({Username: req.body.Username})// Search to see if a user with the requested username already exists
-		.then((user) => {
-			if (user) {
-				return res.status(400).send(req.body.Username + ' already exists');
-			} else {
-				Users.create({
-					Username: req.body.Username,
-					Password: req.body.Password,
-					Email: req.body.Email,
-					Birthdate: req.body.Birthdate,
-				})
-					.then((user) => {
-						res.status(201).json(user);
-					})
-					.catch((error) => {
-						console.error(error);
-						res.status(500).send('Error: ' + error);
-					});
-			}
-		})
-		.catch((error) => {
-			console.error(error);
-			res.status(500).send('Error: ' + error);
-		});
-});
+//Create New User
+  app.post('/users',
+  // Validation logic here for request
+  //you can either use a chain of methods like .not().isEmpty()
+  //which means "opposite of isEmpty" in plain english "is not empty"
+  //or use .isLength({min: 5}) which means
+  //minimum value of 5 characters are only allowed
+  [
+    check('Username', 'Username is required').isLength({min: 5}),
+    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('Password', 'Password is required').not().isEmpty(),
+    check('Email', 'Email does not appear to be valid').isEmail()
+  ], async (req, res) => {
 
+  // check the validation object for errors
+    let errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+
+    let hashedPassword = Users.hashPassword(req.body.Password);
+    await Users.findOne({ Username: req.body.Username }) // Search to see if a user with the requested username already exists
+      .then((user) => {
+        if (user) {
+          //If the user is found, send a response that it already exists
+          return res.status(400).send(req.body.Username + ' already exists');
+        } else {
+          Users
+            .create({
+              Username: req.body.Username,
+              Password: hashedPassword,
+              Email: req.body.Email,
+              Birthday: req.body.Birthday
+            })
+            .then((user) => { res.status(201).json(user) })
+            .catch((error) => {
+              console.error(error);
+              res.status(500).send('Error: ' + error);
+            });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send('Error: ' + error);
+      });
+  });
+
+  
 //Allows user to update username
 app.put('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res) => {
     // CONDITION TO CHECK ADDED HERE
