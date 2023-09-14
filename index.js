@@ -60,21 +60,10 @@ app.use(morgan("combined", { stream: accessLogStream }));
 app.use(express.static("public"));
 
 
-// Get All Movies
-app.get('/movies', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    await Movies.find()
-      .then((movies) => {
-        res.status(201).json(movies);
-      })
-      .catch((error) => {
-        console.error(error);
-        res.status(500).send('Error: ' + error);
-      });
-  });
+
   
   //Return a list of ALL movies to the user;
-  app.get(
-    "/movies",
+  app.get("/movies",
     passport.authenticate("jwt", { session: false }),
     async (request, response) => {
       await Movies.find({})
@@ -90,11 +79,10 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), async (req,
   
   // Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user;
   
-  app.get(
-    "/movies/:title",
+  app.get("/movies/:title",
     passport.authenticate("jwt", { session: false }),
     async (request, response) => {
-      await Movies.findOne({ title: request.params.title })
+      await Movies.findOne({title: request.params.title})
         .then((movie) => {
           response.status(200).json(movie);
         })
@@ -105,8 +93,7 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), async (req,
     }
   );
   //Return data about a genre (description) by name/title (e.g., “Thriller”);
-  app.get(
-    "/movies/genres/:genreName",
+  app.get("/movies/genres/:genreName",
     passport.authenticate("jwt", { session: false }),
     async (request, response) => {
       await Movies.findOne({ "genre.name": request.params.genreName })
