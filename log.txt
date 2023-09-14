@@ -165,3 +165,4 @@
 ::1 - - [14/Sep/2023:17:47:54 +0000] "GET /movies HTTP/1.1" 201 5342 "-" "PostmanRuntime/7.32.3"
 ::1 - - [14/Sep/2023:17:48:12 +0000] "GET /movies HTTP/1.1" 201 5342 "-" "PostmanRuntime/7.32.3"
 ::1 - - [14/Sep/2023:17:48:25 +0000] "GET /movies HTTP/1.1" 401 - "-" "PostmanRuntime/7.32.3"
+::1 - - [14/Sep/2023:18:16:28 +0000] "POST /users HTTP/1.1" 201 187 "-" "PostmanRuntime/7.32.3"
