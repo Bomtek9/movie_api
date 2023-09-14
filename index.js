@@ -187,32 +187,54 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), async (req,
       });
   });
 
+
+// UPDATE - Update a user's info, by Username
+/* We'll expect JSON in this format
+{
+  Username: String, (required)
+  Password: String, (required)
+  Email: String, (required)
+  Birthday: Date
+}*/
+app.put(
+    '/users/:Username',
+    [
+      check('Username', 'Username is required').isLength({ min: 5 }),
+      check(
+        'Username',
+        'Username contains non alphanumeric characters - not allowed.'
+      ).isAlphanumeric(),
+      check('Password', 'Password is required').not().isEmpty(),
+      check('Email', 'Email does not appear to be valid').isEmail(),
+    ],
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+      // check the validation object for errors
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+      }
   
-//Allows user to update username
-app.put('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    // CONDITION TO CHECK ADDED HERE
-    if(req.user.Username !== req.params.Username){
-        return res.status(400).send('Permission denied');
-    }
-    // CONDITION ENDS
-    await Users.findOneAndUpdate({ Username: req.params.Username }, {
-        $set:
+      const hashedPassword = Users.hashPassword(req.body.Password);
+      Users.findOneAndUpdate(
+        { Username: req.params.Username },
         {
+          $set: {
             Username: req.body.Username,
-            Password: req.body.Password,
+            Password: hashedPassword,
             Email: req.body.Email,
-            Birthday: req.body.Birthday
-        }
-    },
-        { new: true }) // This line makes sure that the updated document is returned
-        .then((updatedUser) => {
-            res.json(updatedUser);
-        })
-        .catch((err) => {
-            console.log(err);
-            res.status(500).send('Error: ' + err);
-        })
-});
+            Birthday: req.body.Birthday,
+          },
+        },
+        { new: true }
+      )
+        .then((updatedUser) => res.status(200).json(updatedUser))
+        .catch((error) => {
+          console.error(error);
+          res.status(500).send('Error: ' + error);
+        });
+    }
+  );
 
 //add favorite movie to users list
 app.post(
@@ -235,7 +257,6 @@ app.post(
         });
     }
   );
-
 
 //deletes favorite movie to users list
 app.delete(
