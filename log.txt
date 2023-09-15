@@ -381,3 +381,4 @@
 127.0.0.1 - - [15/Sep/2023:16:27:14 +0000] "GET /movies HTTP/1.1" 500 81 "-" "PostmanRuntime/7.33.0"
 127.0.0.1 - - [15/Sep/2023:16:29:32 +0000] "GET /movies HTTP/1.1" 500 81 "-" "PostmanRuntime/7.33.0"
 127.0.0.1 - - [15/Sep/2023:16:34:50 +0000] "GET /movies HTTP/1.1" 500 81 "-" "PostmanRuntime/7.33.0"
+127.0.0.1 - - [15/Sep/2023:16:35:39 +0000] "GET /movies HTTP/1.1" 500 81 "-" "PostmanRuntime/7.33.0"

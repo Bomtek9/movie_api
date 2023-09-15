@@ -50,9 +50,9 @@ app.get("/", (request, response) => {
 //Return a list of ALL movies to the user;
 app.get(
 	"/movies",
-	// passport.authenticate("jwt", { session: false }),
+	passport.authenticate("jwt", { session: false }),
 	async (request, response) => {
-		await Movies.find({})
+		await Movies.find()
 			.then((movies) => {
 				return response.status(201).json(movies);
 			})
