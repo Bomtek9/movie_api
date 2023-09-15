@@ -15,24 +15,6 @@ const { check, validationResult } = require("express-validator");
 
 const Movies = Models.Movie;
 const Users = Models.User;
-
-//connects to the database
-// mongoose.connect("mongodb://localhost:27017/cfDB", {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
-
-//connects to online mongoDB database -- first param is an environment variable, so the data about my mongodb(username,pw) is not exposed on my github
-// mongoose.connect("mongodb://localhost:27017/myFlixDB", {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
-// console.log("CONNCECTION_URI: " + process.env.CONNECTION_URI);
-
-mongoose.connect(process.env.CONNECTION_URI, {
-	useNewUrlParser: true,
-	useUnifiedTopology: true,
-});
 const app = express();
 
 app.use(bodyParser.json());
@@ -40,27 +22,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const cors = require("cors");
 app.use(cors());
-//cors controls which domains have access to my api
 
-// let allowedOrigins = [
-//   "http://localhost:8080 https://movies-api-render-0a0q.onrender.com/ ",
-// ];
-// app.use(
-//   cors({
-//     origin: (origin, callback) => {
-//       if (!origin) {
-//         return callback(null, true);
-//       }
-//       if (allowedOrigins.indexOf(origin) === -1) {
-//         let message =
-//           "the CORS policy for this application doesnt allow access from origin " +
-//           origin;
-//         return callback(new Error(message), false);
-//       }
-//       return callback(null, true);
-//     },
-//   })
-// );
+
 let auth = require("./auth")(app);
 const passport = require("passport");
 require("./passport");
