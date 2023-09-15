@@ -39,17 +39,7 @@ let auth = require('./auth.js')(app);
 const passport = require('passport');
 require('./passport.js');
 
-// Connect to local database
-// mongoose.connect('mongodb://localhost:27017/myFlixDB', {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true
-// });
 
-// Connect to database on MonoDB Atlas
-mongoose.connect(process.env.CONNECTION_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
 
 // setup Logging
 const accessLogStream = fs.createWriteStream( // create a write stream
