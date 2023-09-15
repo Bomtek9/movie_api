@@ -2,13 +2,13 @@ const express = require("express");
 const morgan = require("morgan");
 const fs = require("fs");
 const path = require("path");
-const { request } = require("http");
+const http = require("http");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const Models = require("./models");
-const { error } = require("console");
+const console = require("console");
 
-// require("dotenv").config();
+require("dotenv").config();
 
 //validates username, pw, etc. user imputs on the server side. To make sure there is no malicious code, and that the imputs follow the desired constrains.
 const { check, validationResult } = require("express-validator");
