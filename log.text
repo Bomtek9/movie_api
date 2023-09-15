@@ -1,5 +1,0 @@
-127.0.0.1 - - [15/Sep/2023:16:07:43 +0000] "GET /directors/Christopher%20Nolan HTTP/1.1" 500 16 "-" "PostmanRuntime/7.33.0"
-127.0.0.1 - - [15/Sep/2023:16:08:04 +0000] "GET /movies/Interstellar HTTP/1.1" 500 16 "-" "PostmanRuntime/7.33.0"
-127.0.0.1 - - [15/Sep/2023:16:10:33 +0000] "GET /movies HTTP/1.1" 500 16 "-" "PostmanRuntime/7.33.0"
-127.0.0.1 - - [15/Sep/2023:16:10:59 +0000] "GET /Movies HTTP/1.1" 500 16 "-" "PostmanRuntime/7.33.0"
-127.0.0.1 - - [15/Sep/2023:16:17:51 +0000] "GET /movies HTTP/1.1" 500 16 "-" "PostmanRuntime/7.33.0"
