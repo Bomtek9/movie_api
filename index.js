@@ -15,8 +15,8 @@ const express = require('express'),
 //     {useNewUrlParser: true, useUnifiedTopology: true, family: 4}
 //     );
 
-mongoose.connect(process.env.CONNECTION_URI, { 
-        useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect( process.env.CONNECTION_URI, 
+    { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Import Mongoose models
 const app = express(),
