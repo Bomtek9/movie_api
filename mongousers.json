@@ -1,0 +1,4 @@
+{"_id":{"$oid":"64f233ba90ebac5592caf56b"},"Name":"iamuser1","Email":"iamuser1@gmail.com","Password":"user1password","Birthdate":{"$date":"1985-01-28T00:00:00Z"},"FavoriteMovies":{"$oid":"64f2300790ebac5592caf569"}}
+{"_id":{"$oid":"64f2343990ebac5592caf56c"},"Name":"iamuser2","Email":"iamuser2@gmail.com","Password":"user2password","Birthdate":{"$date":{"$numberLong":"564085576800000"}}}
+{"_id":{"$oid":"64f2356590ebac5592caf56e"},"Name":"iamuser4","Email":"iamuser4@gmail.com","Password":"user4password","Birthdate":{"$date":"1986-12-31T00:00:00Z"}}
+{"_id":{"$oid":"64f235e890ebac5592caf56f"},"Name":"iamuser5","Email":"iamuser5@gmail.com","Password":"user5password","Birthdate":{"$date":"1986-07-07T05:00:00Z"}}
