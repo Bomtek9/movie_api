@@ -5,7 +5,9 @@ const express = require('express'),
     fs = require('fs'),
     path = require('path'),
     mongoose = require('mongoose'),
-    Models = require('./models.js');
+    Models = require('./models.js'),
+    http = require('http'),
+    url = require('url');
 
     const { check, validationResult } = require('express-validator');
 
@@ -29,7 +31,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // only certain origins to be given access
 const cors = require('cors');
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+// let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 
 app.use(cors({
   origin: (origin, callback) => {
