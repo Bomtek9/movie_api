@@ -1,6 +1,6 @@
 // Modules
 const express = require('express'),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
     morgan = require('morgan'),
     fs = require('fs'),
     path = require('path'),
@@ -31,18 +31,18 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // only certain origins to be given access
 const cors = require('cors');
-// let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 
-// app.use(cors({
-//   origin: (origin, callback) => {
-//     if(!origin) return callback(null, true);
-//     if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
-//       let message = 'The CORS policy for this application doesn not allow access from origin ' + origin;
-//       return callback(new Error(message ), false);
-//     }
-//     return callback(null, true);
-//   }
-// }));
+app.use(cors({
+  origin: (origin, callback) => {
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
+      let message = 'The CORS policy for this application doesn not allow access from origin ' + origin;
+      return callback(new Error(message ), false);
+    }
+    return callback(null, true);
+  }
+}));
 
 // Authentification & Login Endpoint
 let auth = require('./auth')(app) // Login HTML Authentification
