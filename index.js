@@ -60,9 +60,10 @@ app.use(morgan('combined', {stream: accessLogStream}));
 // Endpoints and handling functions
 
 // Home/Index
-app.get('/', (req, res) => {
-    res.sendFile('public/index.html', {root:__dirname});
-});
+
+app.get('*', (req, res) => {
+    res.sendFile('index.html', {root: 'public'});
+  });
 
 // Documentation
 app.get('/documentation', (req, res) => {
@@ -328,6 +329,8 @@ app.delete('/users/:username',
 );
 
 app.use(express.static('public'));
+
+
 
 // General error handling
 app.use((err, req, res, next) => {
