@@ -17,8 +17,8 @@ const express = require('express'),
 //     {useNewUrlParser: true, useUnifiedTopology: true, family: 4}
 //     );
 
-mongoose.connect('mongodb+srv://clayduplantis9:dnjGGyAqDKjKAPh2@dup-api.sgqkv1t.mongodb.net/cfDB?retryWrites=true&w=majority', 
-{ useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect( process.env.CONNECTION_URI, 
+    { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 // Import Mongoose models
