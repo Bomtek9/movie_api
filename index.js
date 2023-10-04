@@ -31,15 +31,14 @@ const app = express(),
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-<<<<<<< Updated upstream
 // only certain origins to be given access
-=======
->>>>>>> Stashed changes
 const cors = require("cors");
 let allowedOrigins = [
   "http://localhost:8080",
   "http://testsite.com",
   "http://localhost:1234",
+  "https://myflix-frontend-791a20b096d6.herokuapp.com/",
+  "https://dup-movies-18ba622158fa.herokuapp.com/",
 ];
 
 app.use(
@@ -90,21 +89,6 @@ app.get("/documentation", (req, res) => {
 // All movies
 app.get(
   "/movies",
-<<<<<<< Updated upstream
-
-  async (req, res) => {
-    await Movies.find()
-      .then((movies) => {
-        res.status(200).json(movies);
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).send("Error: " + err);
-      });
-  }
-);
-
-=======
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     await Movies.find()
@@ -118,7 +102,6 @@ app.get(
   }
 );
 
->>>>>>> Stashed changes
 // Movie
 app.get(
   "/movies/:title",
