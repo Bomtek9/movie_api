@@ -31,7 +31,10 @@ const app = express(),
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+<<<<<<< Updated upstream
 // only certain origins to be given access
+=======
+>>>>>>> Stashed changes
 const cors = require("cors");
 let allowedOrigins = [
   "http://localhost:8080",
@@ -39,16 +42,21 @@ let allowedOrigins = [
   "http://localhost:1234",
 ];
 
-app.use(cors());
-//   origin: (origin, callback) => {
-//     if(!origin) return callback(null, true);
-//     if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
-//       let message = 'The CORS policy for this application doesn not allow access from origin ' + origin;
-//       return callback(new Error(message ), false);
-//     }
-//     return callback(null, true);
-//   }
-// }));
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        // If a specific origin isn’t found on the list of allowed origins
+        let message =
+          "The CORS policy for this application does not allow access from origin " +
+          origin;
+        return callback(new Error(message), false);
+      }
+      return callback(null, true);
+    },
+  })
+);
 
 // Authentification & Login Endpoint
 let auth = require("./auth")(app); // Login HTML Authentification
@@ -82,6 +90,7 @@ app.get("/documentation", (req, res) => {
 // All movies
 app.get(
   "/movies",
+<<<<<<< Updated upstream
 
   async (req, res) => {
     await Movies.find()
@@ -95,6 +104,21 @@ app.get(
   }
 );
 
+=======
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    await Movies.find()
+      .then((movies) => {
+        res.status(200).json(movies);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      });
+  }
+);
+
+>>>>>>> Stashed changes
 // Movie
 app.get(
   "/movies/:title",
