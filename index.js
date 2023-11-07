@@ -297,15 +297,21 @@ app.put(
       });
   }
 );
-// Favorites Add
+
 app.post(
-  "/users/:username/favorites/:movieId",
+  "/users/:username/favorites",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
+    const movieId = req.body.movieId;
+
+    if (!movieId) {
+      return res.status(400).send("Movie ID is required.");
+    }
+
     await Users.findOneAndUpdate(
       { Username: req.params.username },
       {
-        $push: { FavoriteMovies: req.params.movieId },
+        $push: { FavoriteMovies: movieId },
       },
       { new: true }
     )
