@@ -299,10 +299,10 @@ app.put(
 );
 
 app.post(
-  "/users/:Username/favorites/:movieId",
+  "/users/:Username/favorites/:movieId", // Update the route to accept movieId in the path
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    const movieId = req.body.movieId;
+    const movieId = req.params.movieId; // Extract movieId from URL parameters
 
     if (!movieId) {
       return res.status(400).send("Movie ID is required.");
