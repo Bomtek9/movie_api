@@ -241,13 +241,7 @@ app.get(
 );
 
 // Update User
-/* We'll expect JSON in this format
-{
-    Username: String, (required)
-    Password: String, (required)
-    Email: String, (required)
-    Birthday: Date
-} */
+
 app.put(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
@@ -314,6 +308,27 @@ app.post(
     )
       .then((updatedUser) => {
         res.status(200).json(updatedUser);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      });
+  }
+);
+
+// Get a user's favorite movies
+app.get(
+  "/users/:Username/favorites",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    await Users.findOne({ Username: req.params.Username })
+      .populate("FavoriteMovies")
+      .then((user) => {
+        if (user) {
+          res.status(200).json(user.FavoriteMovies);
+        } else {
+          res.status(404).send("User not found.");
+        }
       })
       .catch((err) => {
         console.error(err);
