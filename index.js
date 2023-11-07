@@ -299,7 +299,7 @@ app.put(
 );
 
 app.post(
-  "/users/:username/favorites",
+  "/users/:Username/favorites",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     const movieId = req.body.movieId;
