@@ -309,7 +309,7 @@ app.post(
     }
 
     await Users.findOneAndUpdate(
-      { Username: req.params.username },
+      { Username: req.params.Username },
       {
         $push: { FavoriteMovies: movieId },
       },
@@ -327,11 +327,11 @@ app.post(
 
 // Favorites Remove
 app.delete(
-  "/users/:username/favorites/:movieId",
+  "/users/:Username/favorites/:movieId",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     await Users.findOneAndUpdate(
-      { Username: req.params.username },
+      { Username: req.params.Username },
       {
         $pull: { FavoriteMovies: req.params.movieId },
       },
