@@ -175,16 +175,17 @@ app.post(
   "/users",
   [
     // Validation logic here for request
-    check("Username", "Username is required (min 5).").isLength({ min: 5 }),
+    check("Username (min 5)", "Username is required.").isLength({ min: 5 }),
     check(
       "Username",
       "Username Required: No spaces or special characters."
     ).isAlphanumeric(),
-    check("Password", "Min 6 Characters Required (Alphanumeric Only)").isLength(
-      {
-        min: 6,
-      }
-    ),
+    check(
+      "Password (min 6)",
+      "Min 6 Characters Required (Alphanumeric Only)"
+    ).isLength({
+      min: 6,
+    }),
     check("Email", "Email is required.").not().isEmpty(),
     check("Email", "Email does not appear to be valid.").isEmail(),
   ],
