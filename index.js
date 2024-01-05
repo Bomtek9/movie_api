@@ -171,21 +171,20 @@ app.get(
 );
 
 // User Register
+// User Register
 app.post(
   "/users",
   [
     // Validation logic here for request
-    check("Username (min 5)", "Username is required.").isLength({ min: 5 }),
     check(
       "Username",
-      "Username Required: No spaces or special characters."
-    ).isAlphanumeric(),
-    check(
-      "Password (min 6)",
-      "Min 6 Characters Required (Alphanumeric Only)"
-    ).isLength({
-      min: 6,
-    }),
+      "Username is required and must be at least 5 characters long."
+    )
+      .isLength({ min: 5 })
+      .isAlphanumeric(),
+    check("Password", "Min 6 Characters Required (Alphanumeric Only)")
+      .isLength({ min: 6 })
+      .isAlphanumeric(),
     check("Email", "Email is required.").not().isEmpty(),
     check("Email", "Email does not appear to be valid.").isEmail(),
   ],
