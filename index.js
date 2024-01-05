@@ -226,7 +226,7 @@ app.post(
 
 // User Info
 app.get(
-  "/users/:username",
+  "/users/:Username",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     await Users.findOne({ Username: req.params.username })
@@ -361,7 +361,7 @@ app.delete(
 
 // Deregister
 app.delete(
-  "/users/:username",
+  "/users/:Username",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     await Users.findOneAndRemove({ Username: req.params.username })
