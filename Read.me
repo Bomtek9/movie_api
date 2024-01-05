@@ -1,53 +1,30 @@
-Schema:
+Here is the schema for my database:
 
-| Entity   | Attributes                                                            |   |   |   |
-|----------|-----------------------------------------------------------------------|---|---|---|
-| Movies   | ID, Title, Description, Genre, Director, URL to image, Featured (Y/N) |   |   |   |
-| Director | ID, Name, Bio, Birth year, Death year                                 |   |   |   |
-| Genre    | ID, Name, Description                                                 |   |   |   |
-| Users    | ID, Username, Password, Email, Birthday, Favorite movies              |   |   |   |
+movies:
 
-Movie Table:
+_id: 64f2298090ebac5592caf566
 
-| movieID | title | description | genreID | directorID | imagePath | featured |
-|---------|-------|-------------|---------|------------|-----------|----------|
-|         |       |             |         |            |           |          |
-|         |       |             |         |            |           |          |
-|         |       |             |         |            |           |          |
-|         |       |             |         |            |           |          |
+Description: "An American military advisor embraces the Samurai culture he was hired…"
 
-Genre Table:
+Genre:
+    Name: "Action"
+    Description: "An action film is characterized by high intensity scenes often with ch…"
 
-| genreID | name | description |
-|---------|------|-------------|
-|         |      |             |
-|         |      |             |
-|         |      |             |
-|         |      |             |
+Director:
+    Name: "Edward Zwick"
+    Birth: "1952"
+    Death: "Living"
+    ImagePath: "https://img.moviesrankings.com/t/p/w1280/wwCOJtRAkn287NbWUtOTlYbiL4Z.j…"
+    Featured: False
+    Title: "The Last Samurai"
 
-Director Table:
+User database:
 
-| directorID | name | bio | birthyear | deathyear |
-|------------|------|-----|-----------|-----------|
-|            |      |     |           |           |
-|            |      |     |           |           |
-|            |      |     |           |           |
-|            |      |     |           |           |
+Users:
+_id: 6************
+Username:"Megaman"
+Password:"Mega*****"
+Email: "megaman@gmail.com"
+Birthday: 1985-10-31T00:00:00.000+00:00
 
-User Table:
-
-| userid | username | password | email | birthdate |
-|--------|----------|----------|-------|-----------|
-|        |          |          |       |           |
-|        |          |          |       |           |
-|        |          |          |       |           |
-|        |          |          |       |           |
-
-Users-Movie Table:
-
-| usermovieid | userid | movieid |
-|-------------|--------|---------|
-|             |        |         |
-|             |        |         |
-|             |        |         |
-|             |        |         |
+FavoriteMovies:
