@@ -175,46 +175,38 @@ app.post(
   "/users",
   [
     // Validation logic here for request
+    check("Username (min 5)", "Username is required.").isLength({ min: 5 }),
     check(
       "Username",
-      "Username is required and must be at least 5 characters long."
-    )
-      .isLength({ min: 5 })
-      .isAlphanumeric(),
-    check("Password", "Min 6 Characters Required (Alphanumeric Only)")
-      .isLength({ min: 6 })
-      .isAlphanumeric(),
+      "Username Required: No spaces or special characters."
+    ).isAlphanumeric(),
+    check(
+      "Password (min 6)",
+      "Min 6 Characters Required (Alphanumeric Only)"
+    ).isLength({
+      min: 6,
+    }),
     check("Email", "Email is required.").not().isEmpty(),
     check("Email", "Email does not appear to be valid.").isEmail(),
-    check("Birthday", "Birthday is required.").not().isEmpty(),
   ],
   async (req, res) => {
-    // Debugging: Log request data
-    console.log("Request Body:", req.body);
-
     // check the validation object for errors
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
-      // Debugging: Log validation errors
-      console.log("Validation Errors:", errors.array());
-
       return res.status(422).json({ errors: errors.array() });
     }
-
-    // Convert the date format to ISO 8601
-    const isoFormattedBirthday = new Date(req.body.Birthday).toISOString();
-
     let hashedPassword = Users.hashPassword(req.body.Password);
-    await Users.findOne({ Username: req.body.Username })
+    await Users.findOne({ Username: req.body.Username }) // Search to see if a user with the requested username already exists
       .then((user) => {
         if (user) {
+          //If the user is found, send a response that it already exists
           return res.status(400).send(req.body.Username + " already exists");
         } else {
           Users.create({
             Username: req.body.Username,
             Password: hashedPassword,
             Email: req.body.Email,
-            Birthday: isoFormattedBirthday,
+            Birthday: req.body.Birthday,
           })
             .then((user) => {
               res.status(201).json(user);
