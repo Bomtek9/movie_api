@@ -188,9 +188,15 @@ app.post(
     check("Email", "Email does not appear to be valid.").isEmail(),
   ],
   async (req, res) => {
+    // Debugging: Log request data
+    console.log("Request Body:", req.body);
+
     // check the validation object for errors
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
+      // Debugging: Log validation errors
+      console.log("Validation Errors:", errors.array());
+
       return res.status(422).json({ errors: errors.array() });
     }
     let hashedPassword = Users.hashPassword(req.body.Password);
