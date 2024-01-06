@@ -186,6 +186,7 @@ app.post(
       .isAlphanumeric(),
     check("Email", "Email is required.").not().isEmpty(),
     check("Email", "Email does not appear to be valid.").isEmail(),
+    check("Birthday", "Birthday is required.").not().isEmpty(),
   ],
   async (req, res) => {
     // Debugging: Log request data
@@ -199,18 +200,21 @@ app.post(
 
       return res.status(422).json({ errors: errors.array() });
     }
+
+    // Convert the date format to ISO 8601
+    const isoFormattedBirthday = new Date(req.body.Birthday).toISOString();
+
     let hashedPassword = Users.hashPassword(req.body.Password);
-    await Users.findOne({ Username: req.body.Username }) // Search to see if a user with the requested username already exists
+    await Users.findOne({ Username: req.body.Username })
       .then((user) => {
         if (user) {
-          //If the user is found, send a response that it already exists
           return res.status(400).send(req.body.Username + " already exists");
         } else {
           Users.create({
             Username: req.body.Username,
             Password: hashedPassword,
             Email: req.body.Email,
-            Birthday: req.body.Birthday,
+            Birthday: isoFormattedBirthday,
           })
             .then((user) => {
               res.status(201).json(user);
@@ -245,7 +249,6 @@ app.get(
 );
 
 // Update User
-
 app.put(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
@@ -259,6 +262,7 @@ app.put(
     check("Password", "Password is required.").isLength({ min: 8 }),
     check("Email", "Email is required.").not().isEmpty(),
     check("Email", "Email does not appear to be valid.").isEmail(),
+    check("Birthday", "Birthday is required.").not().isEmpty(),
   ],
   async (req, res) => {
     // check the validation object for errors
@@ -267,11 +271,14 @@ app.put(
       return res.status(422).json({ errors: errors.array() });
     }
 
+    // Convert the date format to ISO 8601
+    const isoFormattedBirthday = new Date(req.body.Birthday).toISOString();
+
     // Condition to check added here
     if (req.user.Username !== req.params.Username) {
       return res.status(400).send("Permission denied");
     }
-    // Condition ends
+
     let hashedPassword = Users.hashPassword(req.body.Password);
     await Users.findOneAndUpdate(
       { Username: req.params.Username },
@@ -280,12 +287,11 @@ app.put(
           Username: req.body.Username,
           Password: hashedPassword,
           Email: req.body.Email,
-          Birthday: req.body.Birthday,
+          Birthday: isoFormattedBirthday,
         },
       },
       { new: true }
-    ) // this makes sure that the updated document is returned
-      // .populate('Favorite_Movies', 'Title')
+    )
       .then((updatedUser) => {
         res.status(201).json(updatedUser);
       })
