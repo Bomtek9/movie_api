@@ -170,20 +170,16 @@ app.get(
   }
 );
 
-// User Register
 app.post(
   "/users",
   [
     // Validation logic here for request
-    check("Username (min 5)", "Username is required.").isLength({ min: 5 }),
+    check("Username", "Username is required.").isLength({ min: 5 }),
     check(
       "Username",
-      "Username Required: No spaces or special characters."
+      "Username contains non alphanumeric characters - not allowed."
     ).isAlphanumeric(),
-    check(
-      "Password (min 6)",
-      "Min 6 Characters Required (Alphanumeric Only)"
-    ).isLength({ min: 6 }),
+    check("Password", "Password is required.").isLength({ min: 6 }),
     check("Email", "Email is required.").not().isEmpty(),
     check("Email", "Email does not appear to be valid.").isEmail(),
   ],
@@ -193,30 +189,32 @@ app.post(
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
-
-    try {
-      // Check if the user already exists
-      const existingUser = await Users.findOne({ Username: req.body.Username });
-
-      if (existingUser) {
-        // If the user is found, send a response that it already exists
-        return res.status(400).send(req.body.Username + " already exists");
-      }
-
-      // If the user doesn't exist, proceed to create a new one
-      let hashedPassword = Users.hashPassword(req.body.Password);
-      const newUser = await Users.create({
-        Username: req.body.Username,
-        Password: hashedPassword,
-        Email: req.body.Email,
-        Birthday: req.body.Birthday,
+    let hashedPassword = Users.hashPassword(req.body.Password);
+    await Users.findOne({ Username: req.body.Username }) // Search to see if a user with the requested username already exists
+      .then((user) => {
+        if (user) {
+          //If the user is found, send a response that it already exists
+          return res.status(400).send(req.body.Username + " already exists");
+        } else {
+          Users.create({
+            Username: req.body.Username,
+            Password: hashedPassword,
+            Email: req.body.Email,
+            Birthday: req.body.Birthday,
+          })
+            .then((user) => {
+              res.status(201).json(user);
+            })
+            .catch((error) => {
+              console.error(error);
+              res.status(500).send("Error: " + error);
+            });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send("Error: " + error);
       });
-
-      res.status(201).json(newUser);
-    } catch (error) {
-      console.error(error);
-      res.status(500).send("Error: " + error);
-    }
   }
 );
 
