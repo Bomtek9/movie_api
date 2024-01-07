@@ -170,6 +170,7 @@ app.get(
   }
 );
 
+//Signup New User
 app.post(
   "/users",
   [
@@ -218,21 +219,21 @@ app.post(
   }
 );
 
-// // User Info
-// app.get(
-//   "/users/:Username",
-//   passport.authenticate("jwt", { session: false }),
-//   async (req, res) => {
-//     await Users.findOne({ Username: req.params.username })
-//       .then((user) => {
-//         res.status(200).json(user);
-//       })
-//       .catch((err) => {
-//         console.error(err);
-//         res.status(500).send("Error: " + err);
-//       });
-//   }
-// );
+// User Info
+app.get(
+  "/users/:Username",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    await Users.findOne({ Username: req.params.Username })
+      .then((user) => {
+        res.status(200).json(user);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      });
+  }
+);
 
 // Update User
 app.put(
@@ -243,12 +244,11 @@ app.put(
     check("Username", "Username is required.").isLength({ min: 5 }),
     check(
       "Username",
-      "Username Required: No spaces or special characters."
+      "Username contains non alphanumeric characters - not allowed."
     ).isAlphanumeric(),
     check("Password", "Password is required.").isLength({ min: 6 }),
     check("Email", "Email is required.").not().isEmpty(),
     check("Email", "Email does not appear to be valid.").isEmail(),
-    check("Birthday", "Birthday is required.").not().isEmpty(),
   ],
   async (req, res) => {
     // check the validation object for errors
