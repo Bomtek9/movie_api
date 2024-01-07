@@ -251,7 +251,7 @@ app.put(
       "Username",
       "Username Required: No spaces or special characters."
     ).isAlphanumeric(),
-    check("Password", "Password is required.").isLength({ min: 8 }),
+    check("Password", "Password is required.").isLength({ min: 6 }),
     check("Email", "Email is required.").not().isEmpty(),
     check("Email", "Email does not appear to be valid.").isEmail(),
     check("Birthday", "Birthday is required.").not().isEmpty(),
