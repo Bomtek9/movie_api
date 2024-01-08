@@ -38,6 +38,7 @@ let allowedOrigins = [
   "http://localhost:8080",
   "http://testsite.com",
   "http://localhost:1234",
+  "http://localhost:4200",
   "https://myflix-frontend-791a20b096d6.herokuapp.com",
   "https://dup-movies-18ba622158fa.herokuapp.com",
   "https://dup-movies.netlify.app",
