@@ -271,6 +271,7 @@ app.put(
   }
 );
 
+// Add User Favorite Movie
 app.post(
   "/users/:Username/favorites/:movieId",
   passport.authenticate("jwt", { session: false }),
@@ -316,7 +317,7 @@ app.get(
   }
 );
 
-// Favorites Remove
+// Remove Users Favorite Movie
 app.delete(
   "/users/:Username/favorites/:movieId",
   passport.authenticate("jwt", { session: false }),
