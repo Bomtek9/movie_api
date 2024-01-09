@@ -126,18 +126,9 @@ app.get(
   "/movies/genres/:genre",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    await Movies.findOne({ "Genre.Name": req.params.genre })
-      .then((movie) => {
-        if (!movie) {
-          res
-            .status(400)
-            .send(
-              "There are no movies in the database with the genre - " +
-                req.params.genre
-            );
-        } else {
-          res.status(200).json(movie.Genre);
-        }
+    await Movies.find({ "Genre.Name": req.params.genre })
+      .then((movies) => {
+        res.status(200).json(movies);
       })
       .catch((err) => {
         console.error(err);
@@ -151,18 +142,9 @@ app.get(
   "/movies/directors/:director",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    await Movies.findOne({ "Director.Name": req.params.director })
-      .then((movie) => {
-        if (!movie) {
-          res
-            .status(400)
-            .send(
-              "There are no movies in the database with the director - " +
-                req.params.director
-            );
-        } else {
-          res.status(200).json(movie.Director);
-        }
+    await Movies.find({ "Director.Name": req.params.director })
+      .then((movies) => {
+        res.status(200).json(movies);
       })
       .catch((err) => {
         console.error(err);
