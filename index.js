@@ -42,6 +42,7 @@ let allowedOrigins = [
   "https://myflix-frontend-791a20b096d6.herokuapp.com",
   "https://dup-movies-18ba622158fa.herokuapp.com",
   "https://dup-movies.netlify.app",
+  "https://bomtek9.github.io/angular-myflix/",
 ];
 
 app.use(
