@@ -62,7 +62,9 @@ app.use(
   })
 );
 
-// Authentification & Login Endpoint
+/**
+ * Authentification & Login Endpoint
+ */
 let auth = require("./auth")(app); // Login HTML Authentification
 const passport = require("passport"); // JWT Authentification
 require("./passport");
@@ -77,7 +79,9 @@ app.use(morgan("combined", { stream: accessLogStream }));
 
 // Endpoints and handling functions
 
-// Home/Index
+/**
+ * Home/Index
+ */
 app.get("/", (req, res) => {
   res.sendFile("public/index.html", { root: __dirname });
 });
@@ -86,12 +90,16 @@ app.get("/", (req, res) => {
 //     res.sendFile('index.html', {root: 'public'});
 //   });
 
-// Documentation
+/**
+ * Documentation
+ */
 app.get("/documentation", (req, res) => {
   res.sendFile("public/documentation.html", { root: __dirname });
 });
 
-// All movies
+/**
+ * Get all movies
+ */
 app.get(
   "/movies",
   passport.authenticate("jwt", { session: false }),
@@ -107,7 +115,9 @@ app.get(
   }
 );
 
-// Movie
+/**
+ * Get movie by title
+ */
 app.get(
   "/movies/:title",
   passport.authenticate("jwt", { session: false }),
@@ -123,7 +133,9 @@ app.get(
   }
 );
 
-// Genre
+/**
+ * Get movies by genre
+ */
 app.get(
   "/movies/genres/:genre",
   passport.authenticate("jwt", { session: false }),
@@ -139,7 +151,9 @@ app.get(
   }
 );
 
-// Director
+/**
+ * Get movies by director
+ */
 app.get(
   "/movies/directors/:director",
   passport.authenticate("jwt", { session: false }),
@@ -155,7 +169,9 @@ app.get(
   }
 );
 
-//Signup New User
+/**
+ * Signup New User
+ */
 app.post(
   "/users",
   [
@@ -204,7 +220,9 @@ app.post(
   }
 );
 
-// User Info
+/**
+ * Get User Info
+ */
 app.get(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
@@ -220,7 +238,9 @@ app.get(
   }
 );
 
-// Update User
+/**
+ * Update User
+ */
 app.put(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
@@ -273,7 +293,9 @@ app.put(
   }
 );
 
-// Add User Favorite Movie
+/**
+ * Add User Favorite Movie
+ */
 app.post(
   "/users/:Username/favorites/:movieId",
   passport.authenticate("jwt", { session: false }),
@@ -298,7 +320,9 @@ app.post(
   }
 );
 
-// Get a user's favorite movies
+/**
+ * Get a user's favorite movies
+ */
 app.get(
   "/users/:Username/favorites",
   passport.authenticate("jwt", { session: false }),
@@ -319,7 +343,9 @@ app.get(
   }
 );
 
-// Remove Users Favorite Movie
+/**
+ * Remove Users Favorite Movie
+ */
 app.delete(
   "/users/:Username/favorites/:movieId",
   passport.authenticate("jwt", { session: false }),
@@ -341,7 +367,9 @@ app.delete(
   }
 );
 
-// Deregister
+/**
+ * Deregister User
+ */
 app.delete(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
@@ -363,7 +391,9 @@ app.delete(
 
 app.use(express.static("public"));
 
-// General error handling
+/**
+ * General error handling
+ */
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Borked!");
