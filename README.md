@@ -17,8 +17,8 @@ This API provides information about movies, genres, and directors. Users can int
     Request Body: None
 
     Response:  
-     Format: JSON
-    Description: A JSON object containing data about a specific movie, including title, description, director details, genre with description, release date, image URL, and featured status.
+    Format: JSON
+    Description: A JSON object containing data about a specific movie, including title, description, director details, genre with description, release date, image URL, and featured        status.
 
 3.  Get Genre Description
     Request:
@@ -86,9 +86,9 @@ This API provides information about movies, genres, and directors. Users can int
     URL: /users/[id]/movies/[movie_id]
     Request Body: None
 
-Response:
-Format: JSON
-Description: Updated user details.
+    Response:
+    Format: JSON
+    Description: Updated user details.
 
 9. Delete User
    Request:
